@@ -1,0 +1,5 @@
+server.name: kibana
+server.host: kibana
+elasticsearch.hosts: [ "http://elasticsearch:9200" ]
+xpack.monitoring.ui.container.elasticsearch.enabled: true
+server.maxPayload: 104857600

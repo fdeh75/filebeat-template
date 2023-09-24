@@ -1,0 +1,26 @@
+version: "2.4"
+
+services:
+  app:
+    container_name: fastapi_app
+    build: ./app
+    ports:
+      - 8000:8000
+    volumes:
+      - app-logs:/logs
+
+  log-shipper:
+    container_name: filebeat
+    image: docker.elastic.co/beats/filebeat:8.10.2
+    entrypoint: filebeat -e -strict.perms=false
+    user: root
+    volumes:
+      - ./filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
+      - app-logs:/var/app/log
+
+volumes:
+  app-logs:
+
+networks:
+  default:
+    name: elk-network
